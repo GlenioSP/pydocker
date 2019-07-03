@@ -33,3 +33,7 @@ And run: `docker-compose -f docker-compose.dev.yaml up --build -d`.
 ## Remove everything
 
 `docker-compose -f docker-compose.dev.yaml down -v --rmi all --remove-orphans`
+
+## Based on tutorials
+
+- [Elegantly activating a virtualenv in a Dockerfile](https://pythonspeed.com/articles/activate-virtualenv-dockerfile/)

@@ -7,7 +7,7 @@ RUN apt-get update \
   build-essential \
   gcc
 
-WORKDIR /home/python/app
+WORKDIR /home/py/app
 
 COPY requirements.txt .
 
@@ -18,20 +18,23 @@ RUN python -m venv venv \
   && pip install -r requirements.txt \
   && deactivate
 
-FROM base as build-image
+FROM base as build
 
 RUN useradd py
 
-WORKDIR /home/python/app
+WORKDIR /home/py/app
 
-RUN chown -R py:py ./
+RUN chown -R py:py ../
 
 USER py
 
-COPY --from=dependencies /home/python/app/venv ./venv
+ENV VIRTUAL_ENV=./venv
+
+COPY --from=dependencies /home/py/app/venv $VIRTUAL_ENV
 COPY . .
 
-RUN . venv/bin/activate
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 EXPOSE 5000
+
 CMD ["python", "app.py"]
