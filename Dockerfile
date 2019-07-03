@@ -1,23 +1,37 @@
-FROM python:3.7-alpine
+FROM python:3.7-slim as base
 
-RUN adduser -D py
+FROM base as dependencies
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+  build-essential \
+  gcc
 
 WORKDIR /home/python/app
 
-COPY requirements.txt requirements.txt
+COPY requirements.txt .
 
-RUN apk --update add python py-pip openssl ca-certificates py-openssl wget
-RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev py-pip build-base \
+RUN python -m venv venv \
+  && . venv/bin/activate \
   && pip install --upgrade pip \
   && pip install --upgrade setuptools \
   && pip install -r requirements.txt \
-  && apk del build-dependencies
+  && deactivate
 
-COPY . .
+FROM base as build-image
+
+RUN useradd py
+
+WORKDIR /home/python/app
 
 RUN chown -R py:py ./
 
 USER py
+
+COPY --from=dependencies /home/python/app/venv ./venv
+COPY . .
+
+RUN . venv/bin/activate
 
 EXPOSE 5000
 CMD ["python", "app.py"]
