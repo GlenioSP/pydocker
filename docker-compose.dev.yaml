@@ -8,4 +8,4 @@ services:
     - "5000:5000"
     volumes:
       - .:/home/python/app    
-    command: python src/server.py
+    command: python app.py
