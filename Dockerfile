@@ -20,4 +20,4 @@ RUN chown -R py:py ./
 USER py
 
 EXPOSE 5000
-CMD ["python", "src/server.py"]
+CMD ["python", "app.py"]
