@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-    - "5000:5000"
+      - "5000:5000"
     volumes:
-      - .:/home/py/app    
+      - ./src:/home/py/app/src
     command: python app.py

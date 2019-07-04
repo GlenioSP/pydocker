@@ -24,7 +24,7 @@ source ./venv/bin/activate && \
 pip freeze > requirements.txt
 ```
 
-And run: `docker-compose -f docker-compose.dev.yaml up --build`.
+And run: `docker-compose -f docker-compose.dev.yaml up --build`
 
 ## Stop containers
 
