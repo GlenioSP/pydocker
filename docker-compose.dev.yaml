@@ -7,5 +7,5 @@ services:
     ports:
     - "5000:5000"
     volumes:
-      - .:/home/python/app    
+      - .:/home/py/app    
     command: python app.py
